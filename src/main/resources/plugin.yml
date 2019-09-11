@@ -1,0 +1,11 @@
+name: InfectedKits
+version: 0.5
+description:
+author: Chaoscrasher & Garth
+main: com.jb1services.mc.garth.infectedkits.main.InfectedKitsPlugin
+api-version: 1.8
+
+commands:
+  tcom:
+    description: Allows you to read the type of a block anywhere in the world!
+    usage: use /tcom x y z w to call the test command

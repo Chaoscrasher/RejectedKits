@@ -1,0 +1,2 @@
+include ':InfectedKits', ':jbutil'
+include ':InfectedKits', ':chaosmcutil'

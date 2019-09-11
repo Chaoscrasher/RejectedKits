@@ -1,0 +1,28 @@
+special-items:
+  vampire-sword:
+    material: WOOD_SWORD
+    name: "Vampire's Sword"
+  slime-sword:
+    material: WOOD_SWORD
+    name: "Slime's Sword"
+  spider-sword:
+    material: WOOD_SWORD
+    name: "Spider's Sword"
+  ender-pearl:
+    material: ENDER_PEARL
+    name: "Enderman's pearl"
+  witch-power-potion:
+    material: POTION
+    name: "Potion of Power"
+  witch-conditioning-potion:
+    material: POTION
+    name: "Potion of extreme Conditioning"
+  witch-blaze-rod:
+    material: BLAZE_ROD
+    name: "Blaze's Rod"
+  slime-boots:
+    material: LEATHER_BOOTS
+    name: "Slime's Boots"
+  spider-eye:
+    material: SPIDER_EYE
+    name: "Spider's Eye"
