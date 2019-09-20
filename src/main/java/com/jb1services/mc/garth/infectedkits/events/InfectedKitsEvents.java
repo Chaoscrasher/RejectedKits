@@ -179,7 +179,7 @@ public class InfectedKitsEvents extends ChaosEventListener implements StaticHelp
 	
 	private boolean isIngame(Player p)
 	{
-		return true;
+		throw new IllegalStateException("Not yet implemented!");
 	}
 	
 	private boolean isEnemy(Entity e)

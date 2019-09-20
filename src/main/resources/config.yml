@@ -26,3 +26,17 @@ special-items:
   spider-eye:
     material: SPIDER_EYE
     name: "Spider's Eye"
+
+kits:
+  skeleton:
+      price: 100
+  witch:
+      price: 50
+  vampire:
+      price: 25
+  enderman:
+      price: 75
+  slime:
+      price: 100
+  spider:
+      price: 85

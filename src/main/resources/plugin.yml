@@ -6,6 +6,6 @@ main: com.jb1services.mc.garth.infectedkits.main.InfectedKitsPlugin
 api-version: 1.8
 
 commands:
-  tcom:
-    description: Allows you to read the type of a block anywhere in the world!
-    usage: use /tcom x y z w to call the test command
+  ikits:
+    description: Allows you to select a kit!
+    usage: use /ikit select <kit> to select a kit!

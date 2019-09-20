@@ -3,9 +3,11 @@ package com.jb1services.mc.garth.infectedkits.main;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 import com.chaoscrasher.global.ChaosBukkit;
-import com.jb1services.mc.garth.infectedkits.commands.TestCommand;
+import com.jb1services.mc.garth.infectedkits.commands.InfectedKitsCommands;
 import com.jb1services.mc.garth.infectedkits.events.InfectedKitsEvents;
 import com.jb1services.mc.garth.infectedkits.structure.Kit;
 import com.jb1services.mc.garth.infectedkits.structure.KitClass;
@@ -33,7 +35,7 @@ public class InfectedKitsPlugin extends JavaPlugin {
 	{
 		instance = this;
 		System.out.println("InfectedKits loaded!");
-		new TestCommand();
+		new InfectedKitsCommands();
 		new InfectedKitsEvents(this);
 		this.saveDefaultConfig();
 		instantiateKits();
@@ -115,17 +117,35 @@ public class InfectedKitsPlugin extends JavaPlugin {
 		ItemStack is = new ItemStack(Material.valueOf(getConfig().getString(base+"material")));
 		return ChaosBukkit.applyName(is, base+"name");
 	}
+
+	public List<Kit> loadKits()
+	{
+		ConfigurationSection csec = getConfig().getConfigurationSection("kits");
+		for (String key : csec.getKeys(false))
+		{
+			kits.add((Kit) csec.get(key));
+		}
+	}
+	
+	public void saveKits()
+	{
+		for (Kit kit : kits)
+		{
+			getConfig().set("kits." + kit.getId(), kit);
+		}
+		saveConfig();
+	}
 	
 	public void instantiateKits()
 	{
-		kits.add(new Kit("Skeleton", 
+		kits.add(new Kit("skeleton", "Skeleton Kit", 100,
 				new ItemStack(Material.LEATHER_HELMET),
 				new ItemStack(Material.LEATHER_CHESTPLATE),
 				new ItemStack(Material.LEATHER_LEGGINGS),
 				new ItemStack(Material.LEATHER_BOOTS),
 				new ItemStack(Material.ARROW))); 
 		
-		kits.add(new Kit("Witch",
+		kits.add(new Kit("witch", "Witch Kit", 75,
 				new ItemStack(Material.GOLD_HELMET),
 				new ItemStack(Material.GOLD_CHESTPLATE),
 				new ItemStack(Material.GOLD_LEGGINGS),
@@ -134,11 +154,11 @@ public class InfectedKitsPlugin extends JavaPlugin {
 				loadWitchPotionConditioning(),
 				loadWitchPotionPower())); 
 		
-		kits.add(new Kit("Vampire",
+		kits.add(new Kit("vampire", "Vampire Kit", 60,
 				new ItemStack(Material.DIAMOND_HELMET),
 				loadVampiresSword())); 
 		
-		kits.add(new Kit("Enderman",
+		kits.add(new Kit("enderman", "Enderman", 50,
 				new ItemStack(Material.LEATHER_HELMET),
 				new ItemStack(Material.LEATHER_CHESTPLATE),
 				new ItemStack(Material.LEATHER_LEGGINGS),
@@ -146,13 +166,13 @@ public class InfectedKitsPlugin extends JavaPlugin {
 				new ItemStack(Material.IRON_SWORD),
 				loadEndermansPearl()));
 		
-		kits.add(new Kit("Slime",
+		kits.add(new Kit("slime", "slime-kit", 45,
 				new ItemStack(Material.DIAMOND_HELMET),
 				new ItemStack(Material.LEATHER_CHESTPLATE),
 				new ItemStack(Material.CHAINMAIL_LEGGINGS),
 				loadSlimeBoots()));
 		
-		kits.add(new Kit("Spider",
+		kits.add(new Kit("spider", "spider-kit", 30,
 				new ItemStack(Material.LEATHER_HELMET),
 				new ItemStack(Material.IRON_CHESTPLATE),
 				new ItemStack(Material.LEATHER_LEGGINGS),
@@ -164,6 +184,14 @@ public class InfectedKitsPlugin extends JavaPlugin {
 	{
 		p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
 		p.removePotionEffect(PotionEffectType.JUMP);
+	}
+	
+	public Optional<Kit> getKit(String kitId)
+	{
+		Object o = getConfig().get("kits."+kitId);
+		if (o != null)
+			return Optional.of((Kit) o);
+		return Optional.empty();
 	}
 	
 	public void sheduleApplyPotionEffects()
