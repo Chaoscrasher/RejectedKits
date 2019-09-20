@@ -1,10 +1,10 @@
-package com.jb1services.mc.garth.infectedkits.commands;
+package com.jb1services.mc.garth.rejectedkits.commands;
 
 import com.chaoscrasher.commands.ChaosCommandExecutor;
 import com.chaoscrasher.commands.arglen.ArgLenFour;
 import com.chaoscrasher.commands.arglen.ArgLenTwo;
-import com.jb1services.mc.garth.infectedkits.main.InfectedKitsPlugin;
-import com.jb1services.mc.garth.infectedkits.structure.Kit;
+import com.jb1services.mc.garth.rejectedkits.main.InfectedKitsPlugin;
+import com.jb1services.mc.garth.rejectedkits.structure.Kit;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -13,8 +13,6 @@ import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.mcinfected.core.infected.InfectedCore;
-import org.mcinfected.core.infected.user.User;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -46,7 +44,6 @@ public class InfectedKitsCommands extends ChaosCommandExecutor {
 
 	private boolean canPlayerAfford(Player player, Kit k)
 	{
-		User user = InfectedCore.getCore().getUserManager().getUser(player).g;
 		throw new IllegalStateException("Not yet implemented!");
 	}
 	

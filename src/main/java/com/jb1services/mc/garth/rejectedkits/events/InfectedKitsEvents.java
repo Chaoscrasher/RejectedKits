@@ -1,4 +1,4 @@
-package com.jb1services.mc.garth.infectedkits.events;
+package com.jb1services.mc.garth.rejectedkits.events;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +26,8 @@ import org.bukkit.potion.PotionType;
 
 import com.chaoscrasher.events.ChaosEventListener;
 import com.chaoscrasher.utils.StaticHelpers;
-import com.jb1services.mc.garth.infectedkits.main.InfectedKitsPlugin;
-import com.jb1services.mc.garth.infectedkits.structure.Cooldown;
-import com.jb1services.mc.garth.infectedkits.structure.SpidersSpider;
+import com.jb1services.mc.garth.rejectedkits.main.InfectedKitsPlugin;
+import com.jb1services.mc.garth.rejectedkits.structure.Cooldown;
 
 
 public class InfectedKitsEvents extends ChaosEventListener implements StaticHelpers {
@@ -38,7 +37,6 @@ public class InfectedKitsEvents extends ChaosEventListener implements StaticHelp
 	public InfectedKitsEvents(InfectedKitsPlugin plugin)
 	{
 		super(plugin);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public InfectedKitsPlugin getPlugin()
@@ -177,11 +175,13 @@ public class InfectedKitsEvents extends ChaosEventListener implements StaticHelp
 		}
 	}
 	
+	//EXT
 	private boolean isIngame(Player p)
 	{
 		throw new IllegalStateException("Not yet implemented!");
 	}
 	
+	//EXT
 	private boolean isEnemy(Entity e)
 	{
 		return e instanceof HumanEntity;
@@ -222,6 +222,7 @@ public class InfectedKitsEvents extends ChaosEventListener implements StaticHelp
 		plyr.getLocation().getWorld().spawnEntity(plyr.getLocation(), EntityType.SPIDER);
 	}
 	
+	//EXT
 	private Player chooseRandomPlayer()
 	{
 		return null;

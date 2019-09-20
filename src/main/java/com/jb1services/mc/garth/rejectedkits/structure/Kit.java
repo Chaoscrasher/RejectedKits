@@ -1,4 +1,4 @@
-package com.jb1services.mc.garth.infectedkits.structure;
+package com.jb1services.mc.garth.rejectedkits.structure;
 
 import java.util.Arrays;
 import java.util.HashMap;

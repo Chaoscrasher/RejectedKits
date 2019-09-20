@@ -1,4 +1,4 @@
-package com.jb1services.mc.garth.infectedkits.main;
+package com.jb1services.mc.garth.rejectedkits.main;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,24 +18,22 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 import com.chaoscrasher.global.ChaosBukkit;
-import com.jb1services.mc.garth.infectedkits.commands.InfectedKitsCommands;
-import com.jb1services.mc.garth.infectedkits.events.InfectedKitsEvents;
-import com.jb1services.mc.garth.infectedkits.structure.Kit;
-import com.jb1services.mc.garth.infectedkits.structure.KitClass;
+import com.jb1services.mc.garth.rejectedkits.commands.InfectedKitsCommands;
+import com.jb1services.mc.garth.rejectedkits.events.InfectedKitsEvents;
+import com.jb1services.mc.garth.rejectedkits.structure.Kit;
 
 public class InfectedKitsPlugin extends JavaPlugin {
 
 	public static InfectedKitsPlugin instance;
 
 	private List<Kit> kits;
-	private Map<Player, KitClass> pdata = new HashMap<>();
 	
 	@Override
 	public void onEnable()
 	{
 		instance = this;
 		System.out.println("InfectedKits loaded!");
-		new InfectedKitsCommands();
+		new InfectedKitsCommands(this);
 		new InfectedKitsEvents(this);
 		this.saveDefaultConfig();
 		instantiateKits();
@@ -118,7 +116,7 @@ public class InfectedKitsPlugin extends JavaPlugin {
 		return ChaosBukkit.applyName(is, base+"name");
 	}
 
-	public List<Kit> loadKits()
+	public void loadKits()
 	{
 		ConfigurationSection csec = getConfig().getConfigurationSection("kits");
 		for (String key : csec.getKeys(false))
