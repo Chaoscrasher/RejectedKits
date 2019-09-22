@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Spider;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -27,6 +29,7 @@ import org.bukkit.potion.PotionType;
 import com.chaoscrasher.events.ChaosEventListener;
 import com.chaoscrasher.utils.StaticHelpers;
 import com.jb1services.mc.garth.rejectedkits.main.InfectedKitsPlugin;
+import com.jb1services.mc.garth.rejectedkits.structure.AgroSpider;
 import com.jb1services.mc.garth.rejectedkits.structure.Cooldown;
 
 
@@ -109,7 +112,12 @@ public class InfectedKitsEvents extends ChaosEventListener implements StaticHelp
 					p.addPotionEffect(effa);
 					p.addPotionEffect(effb);
 				}
-				
+				else if (p.getItemInHand().equals(getPlugin().loadSpiderEye()))
+				{
+					CraftWorld world = (CraftWorld) p.getWorld();
+					getPlugin().spawnCustomSpider(p.getLocation());
+					p.setItemInHand(null);
+				}
 			}
 		}
 	}

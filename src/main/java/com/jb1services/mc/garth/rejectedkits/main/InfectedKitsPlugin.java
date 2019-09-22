@@ -1,15 +1,20 @@
 package com.jb1services.mc.garth.rejectedkits.main;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Spider;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.Potion;
@@ -17,10 +22,15 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
+import com.avaje.ebeaninternal.server.deploy.BeanDescriptor.EntityType;
 import com.chaoscrasher.global.ChaosBukkit;
 import com.jb1services.mc.garth.rejectedkits.commands.InfectedKitsCommands;
 import com.jb1services.mc.garth.rejectedkits.events.InfectedKitsEvents;
+import com.jb1services.mc.garth.rejectedkits.structure.AgroSpider;
 import com.jb1services.mc.garth.rejectedkits.structure.Kit;
+
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntitySpider;
 
 public class InfectedKitsPlugin extends JavaPlugin {
 
@@ -115,7 +125,25 @@ public class InfectedKitsPlugin extends JavaPlugin {
 		ItemStack is = new ItemStack(Material.valueOf(getConfig().getString(base+"material")));
 		return ChaosBukkit.applyName(is, base+"name");
 	}
-
+	
+	public Spider spawnCustomSpider(Location location)
+	{
+		registerCustomSpider();
+		Spider spider = AgroSpider.spawn(location);
+		deRegisterCustomSpider();
+		return spider;
+	}
+	
+	private void registerCustomSpider()
+	{
+		registerEntity("Agro Spider", 52, EntitySpider.class, AgroSpider.class);
+	}
+	
+	private void deRegisterCustomSpider()
+	{
+		registerEntity("Spider", 52, AgroSpider.class, EntitySpider.class);
+	}
+	
 	public void loadKits()
 	{
 		ConfigurationSection csec = getConfig().getConfigurationSection("kits");
@@ -213,5 +241,35 @@ public class InfectedKitsPlugin extends JavaPlugin {
 				}
 			}
 		}, 20*2, 20*2);
+	}
+	
+	public static void registerEntity(String name, int id, Class<? extends EntityInsentient> nmsClass, Class<? extends EntityInsentient> customClass)
+	{
+		try
+		{
+			List<Map<?, ?>> dataMap = new ArrayList<>();
+			for (Field f : EntityType.class.getDeclaredFields())
+			{
+				if (f.getType().getSimpleName().equals(Map.class.getSimpleName()))
+				{
+					f.setAccessible(true);
+					dataMap.add((Map<?,?>) f.get(null)); 
+				}
+			}
+			
+			if (dataMap.get(2).containsKey(id))
+			{
+				dataMap.get(0).remove(name);
+				dataMap.get(2).remove(id);
+			}
+			
+			Method method = EntityType.class.getDeclaredMethod("a", Class.class, String.class, int.class);
+			method.setAccessible(true);
+			method.invoke(null, customClass, name, id);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

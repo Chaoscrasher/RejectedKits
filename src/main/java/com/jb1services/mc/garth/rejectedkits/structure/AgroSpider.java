@@ -1,7 +1,14 @@
 package com.jb1services.mc.garth.rejectedkits.structure;
 
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
+import org.bukkit.entity.Spider;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+
 import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.EntityMonster;
+import net.minecraft.server.v1_8_R3.EntitySpider;
 import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
 import net.minecraft.server.v1_8_R3.PathfinderGoalHurtByTarget;
 import net.minecraft.server.v1_8_R3.PathfinderGoalLeapAtTarget;
@@ -12,7 +19,7 @@ import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
 import net.minecraft.server.v1_8_R3.PathfinderGoalRandomStroll;
 import net.minecraft.server.v1_8_R3.World;
 
-public class AgroSpider extends EntityMonster 
+public class AgroSpider extends EntitySpider 
 {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public AgroSpider(World world) 
@@ -29,5 +36,15 @@ public class AgroSpider extends EntityMonster
         this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false, new Class[0]));
         this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true)); // Creeper attack nearest target selector
     }
-
+    
+    public static Spider spawn(Location loc)
+    {
+    	World mcWorld = (World) ((CraftWorld) loc.getWorld()).getHandle();
+    	final AgroSpider customEntity = new AgroSpider(mcWorld);
+    
+    	customEntity.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+    	((CraftLivingEntity) customEntity.getBukkitEntity()).setRemoveWhenFarAway(false);
+    	mcWorld.addEntity(customEntity, SpawnReason.CUSTOM);
+    	return (Spider) customEntity.getBukkitEntity();
+    }
 }
