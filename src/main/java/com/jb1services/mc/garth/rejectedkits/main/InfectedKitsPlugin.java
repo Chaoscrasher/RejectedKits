@@ -25,7 +25,7 @@ import org.bukkit.potion.PotionType;
 import com.avaje.ebeaninternal.server.deploy.BeanDescriptor.EntityType;
 import com.chaoscrasher.global.ChaosBukkit;
 import com.jb1services.mc.garth.rejectedkits.commands.InfectedKitsCommands;
-import com.jb1services.mc.garth.rejectedkits.events.InfectedKitsEvents;
+import com.jb1services.mc.garth.rejectedkits.events.RejectedKitsEvents;
 import com.jb1services.mc.garth.rejectedkits.structure.AgroSpider;
 import com.jb1services.mc.garth.rejectedkits.structure.Kit;
 
@@ -44,7 +44,7 @@ public class InfectedKitsPlugin extends JavaPlugin {
 		instance = this;
 		System.out.println("InfectedKits loaded!");
 		new InfectedKitsCommands(this);
-		new InfectedKitsEvents(this);
+		new RejectedKitsEvents(this);
 		this.saveDefaultConfig();
 		instantiateKits();
 	}

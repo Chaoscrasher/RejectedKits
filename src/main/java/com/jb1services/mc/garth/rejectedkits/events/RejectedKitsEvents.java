@@ -33,11 +33,11 @@ import com.jb1services.mc.garth.rejectedkits.structure.AgroSpider;
 import com.jb1services.mc.garth.rejectedkits.structure.Cooldown;
 
 
-public class InfectedKitsEvents extends ChaosEventListener implements StaticHelpers {
+public class RejectedKitsEvents extends ChaosEventListener implements StaticHelpers {
 
 	private Map<Player, Map<String, Cooldown>> cooldowns = new HashMap<>();
 	
-	public InfectedKitsEvents(InfectedKitsPlugin plugin)
+	public RejectedKitsEvents(InfectedKitsPlugin plugin)
 	{
 		super(plugin);
 	}
